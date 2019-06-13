@@ -1,0 +1,52 @@
+#########################################################################
+  https://www.cnblogs.com/fnlingnzb-learner/p/6743367.html     （安装编译json的方法） 
+
+1，以下面两个为例，下载下面两个tar包
+    scons-2.1.0.tar.gz 
+    tar -zvxf jsoncpp-src-0.5.0.tar.gz
+    
+2、解压scons-2.1.0.tar.gz
+    tar -zvxf scons-2.1.0.tar.gz
+   进入到解压目录scons-2.1.0下面，执行命令：
+    sudo python setup.py install
+    
+3、解压jsconcpp
+    tar -zvxf jsoncpp-src-0.5.0.tar.gz
+   进入到jsoncpp解压目录下，执行命令：
+    sudo scons platform=linux-gcc 
+    
+4，此时，头文件在jsoncpp-src-0.5.0/include/中；库文件在jsoncpp-src-0.5.0/libs/中
+
+5、如果为了方便，可以将下面的几个文件拷贝到系统默认目录下
+   将/jsoncpp-src-0.5.0/include/目录下的json文件夹拷贝到/usr/include/
+   将jsoncpp-src-0.5.0/libs/linux-gcc-4.9.1/目录下的libjson_linux-gcc-4.9.1_libmt.a 拷贝到/usr/local/lib/下，并为了方便使用，将其重命名为libjson.a
+
+################################################################################
+
+
+[xxxx]tree lib
+.
+	include
+		json
+			autolink.h
+			config.h
+			features.h
+			forwards.h
+			json.h
+			reader.h
+			value.h
+			writer.h
+	lib
+		libjsoncpp.a
+		libjsoncpp.so
+--------------------------------------------------------------------------------------------------------------------------------
+1.在编译时，-l 选项告诉编译器要使用jsoncpp这个库；-L .告诉编译器在当前目录中查找库文件
+
+2.生成可执行为文件之后还需要做下面的事情，否则找不到jsoncpp库
+一、可以把当前路径加入 /etc/ld.so.conf中然后运行ldconfig，或者以当前路径为参数运行ldconfig（要有root权限才行）。
+
+二、把当前路径加入环境变量LD_LIBRARY_PATH中
+
+三、也可以把当前路径加入到/etc/profile中然后运行( 在/etc/profile末尾添加  export LD_LIBRARY_PATH=/home/hz/chat/lib/lib:$LD_LIBRARY_PATH  然后保存退出并且运行 source /etc/profile)
+
+四、当然，如果你觉得不会引起混乱的话，可以直接把该库拷入/lib,/usr/lib/等位置（无可避免，这样做也要有权限），这样链接器和加载器就都可以准确的找到该库了。

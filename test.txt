@@ -1,0 +1,14 @@
+######################################################################
+wget http://oss.metaparadigm.com/json-c/json-c-0.9.tar.gz
+tar xvf json-c-0.9.tar.gz
+cd json-c-0.9/
+./configure
+make
+sudo make install
+
+################################################################
+用gdb调试时加 -g 选项 
+gdb调试多线程时： info threads
+		          set scheduler-locking on/off
+
+注意，调试是gdb ./ChatClient      而不是 gdb ChatClient
